@@ -24,7 +24,7 @@ EMD.KISS_IMG_URL = 'https://raw.githubusercontent.com/ilanlal/basic-telegram-bot
 EMD.CHEERS_IMG_URL = 'https://raw.githubusercontent.com/ilanlal/basic-telegram-bot-remastered/main/assets/bitmoji-20190109115847.webp';
 EMD.BLINK_IMG_URL = 'https://raw.githubusercontent.com/ilanlal/basic-telegram-bot-remastered/main/assets/bitmoji-20190109115905.webp';
 EMD.LOGO_PNG_URL = 'https://raw.githubusercontent.com/ilanlal/basic-telegram-bot-remastered/main/assets/logo480.png';
-EMD.GIT_REPO_URL = 'https://github.com/ilanlal/basic-telegram-bot-remastered';
+EMD.GIT_REPO_URL = 'https://github.com/ilanlal/addon4gas';
 
 EMD.Home = {
     entityName: 'Home',
@@ -40,122 +40,28 @@ EMD.Home = {
                 imageAltText: 'Home Image'
             },
             sections: [
-                {  // Environment variables section
-                    //header: 'Environment Variables',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 1,
+                {   // TextButton to show terminal output sheet with welcome message
+                    collapsible: false,
+                    numUncollapsibleWidgets: 0,
                     widgets: [
-                        {   // Environment variables widget
-                            id: 'environment_variables_widget',
-                            DecoratedText: {
-                                text: data?.environmentTraffic || 'Configure your environment variables to get started',
-                                topLabel: 'Step #1: Environment Variables',
-                                bottomLabel: 'Click 🔩 to manage your environment variables',
-                                wrapText: false,
-                                textButton: {
-                                    disabled: false,
-                                    text: '🔩',
-                                    onClick: {
-                                        functionName: 'CardHandler.Addon.onOpenCardClick',
-                                        parameters: {
-                                            card: 'EMD.Cards.EnvironmentVariables'
-                                        }
-                                    }
-                                }
+                        {  // Welcome widget
+                            id: 'welcome_text_paragraph',
+                            TextParagraph: {
+                                text: 'Welcome to the Addon! Use the menu to navigate through different sections.'
                             }
-                        }
-                    ]
-                },
-                {   // Bot Setup Section
-                    // header: 'Telegram Bot Setup',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 1,
-                    widgets: [
-                        {   // Bot setup widget
-                            id: 'bot_setup_widget',
+                        },
+                        {  // DecoratedText with TextButton to show terminal output sheet
+                            id: 'show_terminal_output_button',
                             DecoratedText: {
-                                text: 'Step #2: Setup Your Bot',
-                                topLabel: '📡 Bot Setup',
-                                bottomLabel: 'Click on 🤖 to setup your bot API token, set bot info & webhook',
+                                text: '💻 Terminal Output',
+                                bottomLabel: 'View the terminal output log sheet',
                                 wrapText: false,
                                 textButton: {
                                     disabled: false,
-                                    text: '🤖',
+                                    text: '💻',
                                     onClick: {
-                                        functionName: 'CardHandler.Addon.onOpenCardClick',
-                                        parameters: { card: 'EMD.Cards.BotSetup' }
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {   // Automation Section
-                    // header: 'Automation',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 1,
-                    widgets: [
-                        {   // Automation management widget
-                            id: 'automation_management_widget',
-                            DecoratedText: {
-                                text: 'Automation - Workflow Management',
-                                topLabel: `Total: ${data?.totalAutomations || 0} workflows`,
-                                bottomLabel: 'Click ⚡ to manage your automations',
-                                wrapText: false,
-                                textButton: {
-                                    disabled: false,
-                                    text: '⚡',
-                                    onClick: {
-                                        functionName: 'CardHandler.Addon.onOpenCardClick',
-                                        parameters: { card: 'EMD.Cards.Automation' }
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {   // Channel Management Section
-                    // header: 'Channel Management',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 1,
-                    widgets: [
-                        {  // Channel management widget
-                            id: 'channel_management_widget',
-                            DecoratedText: {
-                                text: 'Channels: Manage Your Bot Channels',
-                                topLabel: `Total: ${data?.totalChannels || 0} channels`,
-                                bottomLabel: 'Click 📢 to manage your bot channels',
-                                wrapText: false,
-                                textButton: {
-                                    disabled: false,
-                                    text: '📢',
-                                    onClick: {
-                                        functionName: 'CardHandler.Addon.onOpenCardClick',
-                                        parameters: { card: 'EMD.Cards.Channels' }
-                                    }
-                                }
-                            }
-                        }
-                    ]
-                },
-                { // Customer Management Section
-                    // header: 'Customer Management',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 1,
-                    widgets: [
-                        {  // Customer management widget
-                            id: 'customer_management_widget',
-                            DecoratedText: {
-                                text: 'CRM: Manage Your Customers',
-                                topLabel: `Total: ${data?.totalCustomer || 0} customers`,
-                                bottomLabel: 'Click 👥 to manage your customers (telegram users)',
-                                wrapText: false,
-                                textButton: {
-                                    disabled: false,
-                                    text: '👥',
-                                    onClick: {
-                                        functionName: 'CardHandler.Addon.onOpenCardClick',
-                                        parameters: { card: 'EMD.Cards.Customer' }
+                                        functionName: 'SpreadsheetHandler.Addon.onInsertSampleDataClick',
+                                        parameters: { card: 'EMD.Spreadsheet.TerminalOutput' }
                                     }
                                 }
                             }
@@ -337,7 +243,11 @@ EMD.TerminalOutput = {
     entityName: 'TerminalOutput',
     sheet: (data = {}) => {
         return {
-            name: '💻 Terminal Output'
+            name: '💻 Terminal Output',
+            columns: ['Timestamp', 'Source', 'Message', 'Details', 'More Info'],
+            sample_data: [
+                [new Date().toISOString(), 'server', 'Hi there! This is your terminal output log.', 'No details', 'N/A']
+            ]
         };
     }
 }
