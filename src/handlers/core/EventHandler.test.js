@@ -1,4 +1,4 @@
-require('../../tests');
+require('../../../tests');
 
 const { EventHandler } = require('./EventHandler');
 

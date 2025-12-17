@@ -1,6 +1,6 @@
-const { EventHandler } = require('./EventHandler');
-const { CardHandler } = require('./core/CardHandler');
+const { EventHandler } = require('./core/EventHandler');
+const { NavigationHandler } = require('./core/NavigationHandler');
 
 // Expose handlers globally for testing and local Apps Script runtime
-global.CardHandler = CardHandler;
+global.NavigationHandler = NavigationHandler;
 global.EventHandler = EventHandler;

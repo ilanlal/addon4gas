@@ -197,102 +197,6 @@ EMD.Home = {
     }
 }
 
-EMD.Sample = {
-    entityName: 'Sample',
-    card: (data = {}) => {
-        return {
-            name: 'sample_Card',
-            header: {
-                title: 'Sample Card',
-                subTitle: 'This is a sample card pushed onto the stack.',
-                imageUrl: EMD.MATH_IMG_URL,
-                imageStyle: CardService.ImageStyle.SQUARE,
-                imageAltText: 'Sample Image'
-            },
-            sections: [
-                {
-                    // header: 'Sample Card Section',
-                    widgets: [
-                        {
-                            id: 'sample_card_text_paragraph',
-                            TextParagraph: {
-                                text: 'This is a sample card that has been pushed onto the card stack. You can navigate back to the previous card using the back button.'
-                            }
-                        }
-                    ]
-                },
-                {   // Card operations section
-                    header: 'Card Operations',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 0,
-                    widgets: [
-                        {   // TextParagraph widget
-                            id: 'card_operations_text_paragraph',
-                            TextParagraph: {
-                                text: 'Use the buttons below to demonstrate card operations like popping to root or opening a new card.'
-                            }
-                        },
-                        {   // TextButton to pop to root card
-                            id: 'pop_to_root_card_button',
-                            TextButton: {
-                                text: '⬆️ Pop to Root Card',
-                                onClick: {
-                                    functionName: 'CardHandler.Controller.onPopToRootCardClick',
-                                    parameters: { card: 'EMD.Cards.Home' }
-                                }
-                            }
-                        },
-                        {   // TextButton to open a new card
-                            id: 'open_new_card_button',
-                            TextButton: {
-                                text: '🆕 Open New Card',
-                                onClick: {
-                                    functionName: 'CardHandler.Controller.onOpenNewCardClick',
-                                    parameters: { card: 'EMD.Cards.Sample' }
-                                }
-                            }
-                        },
-                        {   // TextButton to update current card
-                            id: 'update_current_card_button',
-                            TextButton: {
-                                text: '♻️ Update Current Card',
-                                onClick: {
-                                    functionName: 'CardHandler.Controller.onUpdateCurrentCardClick',
-                                    parameters: { card: 'EMD.Cards.Sample' }
-                                }
-                            }
-                        },
-                        {   // TextButton to pop to named card
-                            id: 'pop_to_named_card_button',
-                            TextButton: {
-                                text: '🔙 Pop to Named Card (Home)',
-                                onClick: {
-                                    functionName: 'CardHandler.Controller.onPopToNamedCardClick',
-                                    parameters: { card: 'EMD.Cards.Home' }
-                                }
-                            }
-                        }
-                    ]
-                },
-                {   // Data view
-                    header: 'Data View',
-                    collapsible: true,
-                    numUncollapsibleWidgets: 0,
-                    widgets: [
-                        {   // Data View widget
-                            id: 'data_view_widget',
-                            TextParagraph: {
-                                text: `Data: ${JSON.stringify(data, null, 2)}`,
-                                maxLines: 35
-                            }
-                        }
-                    ]
-                }
-            ]
-        };
-    }
-}
-
 EMD.Help = {
     entityName: 'Help',
     card: (data = {}) => {
@@ -458,13 +362,107 @@ EMD.TerminalOutput = {
     }
 }
 
+EMD.CardSample = {
+    entityName: 'CardSample',
+    card: (data = {}) => {
+        return {
+            name: `${data.cardName || 'rootCard'}`,
+            header: {
+                title: `${data.cardName || 'Sample'} Card`,
+                subTitle: `Time: ${new Date().toLocaleString()}`,
+                imageUrl: EMD.MATH_IMG_URL,
+                imageStyle: CardService.ImageStyle.SQUARE,
+                imageAltText: 'Sample Image'
+            },
+            sections: [
+                {
+                    // header: 'Sample Card Section',
+                    widgets: [
+                        {
+                            id: 'sample_card_text_paragraph',
+                            TextParagraph: {
+                                text: 'This is a sample card that has been pushed onto the card stack. You can navigate back to the previous card using the back button.'
+                            }
+                        }
+                    ]
+                },
+                {   // Card operations section
+                    header: 'Card Operations',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 2,
+                    widgets: [
+                        {   // TextParagraph widget
+                            id: 'card_operations_text_paragraph',
+                            TextParagraph: {
+                                text: 'Use the buttons below to demonstrate card operations like popping to root or opening a new card.'
+                            }
+                        },
+                        {   // TextButton to open a new card
+                            id: 'open_new_card_button',
+                            TextButton: {
+                                text: '🆕 Open New Card',
+                                onClick: {
+                                    functionName: 'NavigationHandler.Controller.onPushCardClick',
+                                    parameters: { template: 'EMD.Cards.CardSample', cardName: 'cardB' }
+                                }
+                            }
+                        },
+                        {   // TextButton to pop to root card
+                            id: 'pop_to_root_card_button',
+                            TextButton: {
+                                text: '⬆️ Pop to Root Card',
+                                onClick: {
+                                    functionName: 'NavigationHandler.Controller.onPopToRootCardClick'
+                                }
+                            }
+                        },
+                        {   // TextButton to update current card
+                            id: 'update_current_card_button',
+                            TextButton: {
+                                text: '♻️ Update Current Card',
+                                onClick: {
+                                    functionName: 'NavigationHandler.Controller.onUpdateCardClick',
+                                    parameters: { card: 'EMD.Cards.CardSample' }
+                                }
+                            }
+                        },
+                        {   // TextButton to pop to named card
+                            id: 'pop_to_named_card_button',
+                            TextButton: {
+                                text: '🔙 Pop to Named Card (Home)',
+                                onClick: {
+                                    functionName: 'NavigationHandler.Controller.onPopToNamedCardClick',
+                                    parameters: { cardName: 'EMD.Cards.Home' }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {   // Data view
+                    header: 'Data View',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 0,
+                    widgets: [
+                        {   // Data View widget
+                            id: 'data_view_widget',
+                            TextParagraph: {
+                                text: `Data: ${JSON.stringify(data, null, 2)}`,
+                                maxLines: 35
+                            }
+                        }
+                    ]
+                }
+            ]
+        };
+    }
+}
 
 EMD.Cards = {
     Home: EMD.Home.card,
     Account: EMD.Account.card,
     Help: EMD.Help.card,
     About: EMD.About.card,
-    Sample: EMD.Sample.card
+    CardSample: EMD.CardSample.card
 }
 
 EMD.Spreadsheet = {

@@ -76,18 +76,18 @@ EventHandler.Wrapper = class {
     }
 
     handleOpenHomeCard(e) {
-        return CardHandler.Controller
-                .onOpenCardClick({ parameters: { card: 'EMD.Cards.Home' } });
+        return NavigationHandler.Controller
+                .onPushCardClick({ parameters: { template: 'EMD.Cards.Home' } });
     }
 
     handleOpenAccountCard(e) {
-        return CardHandler.Controller
-                .onOpenCardClick({ parameters: { card: 'EMD.Cards.Account' } });
+        return NavigationHandler.Controller
+                .onPushCardClick({ parameters: { template: 'EMD.Cards.Account' } });
     }
 
     handleOpenAboutCard(e) {
-        return CardHandler.Controller
-                .onOpenCardClick({ parameters: { card: 'EMD.Cards.About' } });
+        return NavigationHandler.Controller
+                .onPushCardClick({ parameters: { template: 'EMD.Cards.About' } });
     }
 
     handleActivatePremiumClicked(e) {
