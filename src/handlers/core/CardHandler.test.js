@@ -3,10 +3,6 @@ require('../../../tests');
 const { CardHandler } = require('./CardHandler');
 
 describe('CardHandler', () => {
-    beforeEach(() => {
-        UrlFetchAppStubConfiguration.reset();
-    });
-
     it('should create an instance of CardHandler', () => {
         const handler = new CardHandler();
         expect(handler).toBeInstanceOf(CardHandler);
@@ -19,7 +15,7 @@ describe('CardHandler', () => {
                 card: 'EMD.Cards.Home'
             }
         }; // Mock event object
-        const actionResponse = CardHandler.Addon.onOpenCardClick(event);
+        const actionResponse = CardHandler.Controller.onOpenCardClick(event);
         expect(actionResponse).toBeDefined();
         const data = actionResponse.getData();
         expect(data).toBeDefined();

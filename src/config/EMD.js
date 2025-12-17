@@ -65,6 +65,22 @@ EMD.Home = {
                                     }
                                 }
                             }
+                        },
+                        {  // DecoratedText with TextButton to push 'Help' card
+                            id: 'basic_bot_operation_button',
+                            DecoratedText: {
+                                text: '❓ Need Help?',
+                                bottomLabel: 'Click \'❓\' to open the Help card',
+                                wrapText: false,
+                                textButton: {
+                                    disabled: false,
+                                    text: '❓',
+                                    onClick: {
+                                        functionName: 'CardHandler.Controller.onPushCardClick',
+                                        parameters: { card: 'EMD.Cards.Help' }
+                                    }
+                                }
+                            }
                         }
                     ]
                 },

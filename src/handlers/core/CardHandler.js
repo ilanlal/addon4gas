@@ -27,52 +27,52 @@ class CardHandler {
     }
 };
 
-CardHandler.Addon = {
+CardHandler.Controller = {
     onPushCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onUpdateCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopToNamedCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopToRootCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onOpenCardClick: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onToggleBooleanSetting: (e) => {
         return new CardHandler
-            .AddonWrapper(
+            .Wrapper(
                 CardHandler.prototype.documentProperties)
             .handleToggleBooleanSetting(e);
     }
 }
 
-CardHandler.AddonWrapper = class {
+CardHandler.Wrapper = class {
     constructor(documentProperties, userProperties, scriptProperties) {
         this._documentProperties = documentProperties;
         this._userProperties = userProperties;

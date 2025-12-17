@@ -1,4 +1,11 @@
 class EventHandler {
+    get activeSpreadsheet() {
+        if (!this._activeSpreadsheet) {
+            this._activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+        }
+        return this._activeSpreadsheet;
+    }
+
     get documentProperties() {
         if (!this._documentProperties) {
             this._documentProperties = PropertiesService.getDocumentProperties();
@@ -6,60 +13,80 @@ class EventHandler {
         return this._documentProperties;
     }
 
+    get userProperties() {
+        if (!this._userProperties) {
+            this._userProperties = PropertiesService.getUserProperties();
+        }
+        return this._userProperties;
+    }
+
+    get scriptProperties() {
+        if (!this._scriptProperties) {
+            this._scriptProperties = PropertiesService.getScriptProperties();
+        }
+        return this._scriptProperties;
+    }
+
     constructor() {
+        this._activeSpreadsheet = null;
         this._documentProperties = null;
+        this._userProperties = null;
+        this._scriptProperties = null;
     }
 };
 
-EventHandler.Addon = {
+EventHandler.Controller = {
     onOpenHomeCard: (e) => {
         return new EventHandler
-            .AddonWrapper(
-                EventHandler.prototype.documentProperties)
+            .Wrapper(
+                EventHandler.prototype.activeSpreadsheet, EventHandler.prototype.documentProperties, EventHandler.prototype.userProperties, EventHandler.prototype.scriptProperties)
             .handleOpenHomeCard(e);
     },
     onOpenAccountCard: (e) => {
         return new EventHandler
-            .AddonWrapper(
-                EventHandler.prototype.documentProperties)
+            .Wrapper(
+                EventHandler.prototype.activeSpreadsheet, EventHandler.prototype.documentProperties, EventHandler.prototype.userProperties, EventHandler.prototype.scriptProperties)
             .handleOpenAccountCard(e);
     },
     onOpenAboutCard: (e) => {
         return new EventHandler
-            .AddonWrapper(
-                EventHandler.prototype.documentProperties)
+            .Wrapper(
+                EventHandler.prototype.activeSpreadsheet, EventHandler.prototype.documentProperties, EventHandler.prototype.userProperties, EventHandler.prototype.scriptProperties)
             .handleOpenAboutCard(e);
     },
     onActivatePremiumClicked: (e) => {
         return new EventHandler
-            .AddonWrapper(
-                EventHandler.prototype.documentProperties)
+            .Wrapper(
+                EventHandler.prototype.activeSpreadsheet, EventHandler.prototype.documentProperties, EventHandler.prototype.userProperties, EventHandler.prototype.scriptProperties)
             .handleActivatePremiumClicked(e);
     },
     onRevokeLicenseClicked: (e) => {
         return new EventHandler
-            .AddonWrapper(
-                EventHandler.prototype.documentProperties)
+            .Wrapper(
+                EventHandler.prototype.activeSpreadsheet, EventHandler.prototype.documentProperties, EventHandler.prototype.userProperties, EventHandler.prototype.scriptProperties)
             .handleRevokeLicenseClicked(e);
     }
 }
-EventHandler.AddonWrapper = class {
-    constructor(documentProperties) {
+EventHandler.Wrapper = class {
+    constructor(activeSpreadsheet, documentProperties, userProperties, scriptProperties) {
+        this._activeSpreadsheet = activeSpreadsheet;
         this._documentProperties = documentProperties;
+        this._userProperties = userProperties;
+        this._scriptProperties = scriptProperties;
     }
 
     handleOpenHomeCard(e) {
-        return CardHandler.Addon
+        return CardHandler.Controller
                 .onOpenCardClick({ parameters: { card: 'EMD.Cards.Home' } });
     }
 
     handleOpenAccountCard(e) {
-        return CardHandler.Addon
+        return CardHandler.Controller
                 .onOpenCardClick({ parameters: { card: 'EMD.Cards.Account' } });
     }
 
     handleOpenAboutCard(e) {
-        return CardHandler.Addon
+        return CardHandler.Controller
                 .onOpenCardClick({ parameters: { card: 'EMD.Cards.About' } });
     }
 
