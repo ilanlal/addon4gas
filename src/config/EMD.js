@@ -84,7 +84,197 @@ EMD.Home = {
                         }
                     ]
                 },
+                {   // Demonstration navigation features section
+                    header: 'EMD.Cards Demonstration',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 0,
+                    widgets: [
+                        {   // TextParagraph widget
+                            id: 'card_handler_demo_text_paragraph',
+                            TextParagraph: {
+                                text: 'This section demonstrates various CardHandler features including input widgets and data views.'
+                            }
+                        },
+                        {   // DecoratedText with TextButton to push 'Sample' card
+                            id: 'about_card_button',
+                            DecoratedText: {
+                                text: 'Push Card',
+                                bottomLabel: 'Click \'➡️\' to push Sample card onto the stack',
+                                wrapText: false,
+                                textButton: {
+                                    disabled: false,
+                                    text: '➡️',
+                                    onClick: {
+                                        functionName: 'CardHandler.Controller.onPushCardClick',
+                                        parameters: { card: 'EMD.Cards.Sample' }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {   // Demonstration collapsible section with various input widgets
+                    header: 'Text Input Samples',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 2,
+                    widgets: [
+                        {
+                            id: 'demo_text_paragraph',
+                            TextParagraph: {
+                                text: 'This is a demonstration collapsible section to showcase how to structure cards and sections in your Addon.'
+                            }
+                        },
+                        {   // TextInput sample with rich text input mode and text validation
+                            id: 'sample_text_input_widget',
+                            TextInput: {
+                                title: 'Sample Text Input with RICH_TEXT Mode and Validation on Text',
+                                fieldName: 'sample_text_input',
+                                hint: 'Enter some text here',
+                                multiline: false,
+                                // inputMode (CardService.TextInputMode.PLAIN_TEXT || CardService.TextInputMode.RICH_TEXT)
+                                inputMode: CardService.TextInputMode.RICH_TEXT,
+                                validation: {
+                                    characterLimit: '150',
+                                    // InputType.INTEGER || InputType.EMAIL || InputType.FLOAT || InputType.TEXT
+                                    type: CardService.InputType.TEXT
+                                },
+                                value: data.sampleTextInputValue || ''
+                            }
+                        },
+                        {   // TextInput sample with plain text input mode and INTEGER validation, character limit 3
+                            id: 'sample_integer_input_widget',
+                            TextInput: {
+                                title: 'Sample Integer Input with PLAIN_TEXT Mode and Validation on Integer, Character Limit 3',
+                                fieldName: 'sample_integer_input',
+                                hint: 'Enter an integer value here',
+                                multiline: false,
+                                // inputMode (CardService.TextInputMode.PLAIN_TEXT || CardService.TextInputMode.RICH_TEXT)
+                                inputMode: CardService.TextInputMode.PLAIN_TEXT,
+                                validation: {
+                                    characterLimit: '3',
+                                    // InputType.INTEGER || InputType.EMAIL || InputType.FLOAT || InputType.TEXT
+                                    type: CardService.InputType.INTEGER
+                                },
+                                value: data.sampleIntegerInputValue || ''
+                            }
+                        },
+                        {   // TextInput sample with plain text input mode and FLOAT validation, character limit 7
+                            id: 'sample_float_input_widget',
+                            TextInput: {
+                                title: 'Sample Float Input with PLAIN_TEXT Mode and Validation on Float, Character Limit 7',
+                                fieldName: 'sample_float_input',
+                                hint: 'Enter a float value here',
+                                multiline: false,
+                                // inputMode (CardService.TextInputMode.PLAIN_TEXT || CardService.TextInputMode.RICH_TEXT)
+                                inputMode: CardService.TextInputMode.PLAIN_TEXT,
+                                validation: {
+                                    characterLimit: '7',
+                                    // InputType.INTEGER || InputType.EMAIL || InputType.FLOAT || InputType.TEXT
+                                    type: CardService.InputType.FLOAT
+                                },
+                                value: data.sampleFloatInputValue || ''
+                            }
+                        }
+                    ]
+
+                },
                 { // Data view
+                    header: 'Data View',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 0,
+                    widgets: [
+                        {   // Data View widget
+                            id: 'data_view_widget',
+                            TextParagraph: {
+                                text: `Data: ${JSON.stringify(data, null, 2)}`,
+                                maxLines: 35
+                            }
+                        }
+                    ]
+                }
+            ]
+        };
+    }
+}
+
+EMD.Sample = {
+    entityName: 'Sample',
+    card: (data = {}) => {
+        return {
+            name: 'sample_Card',
+            header: {
+                title: 'Sample Card',
+                subTitle: 'This is a sample card pushed onto the stack.',
+                imageUrl: EMD.MATH_IMG_URL,
+                imageStyle: CardService.ImageStyle.SQUARE,
+                imageAltText: 'Sample Image'
+            },
+            sections: [
+                {
+                    // header: 'Sample Card Section',
+                    widgets: [
+                        {
+                            id: 'sample_card_text_paragraph',
+                            TextParagraph: {
+                                text: 'This is a sample card that has been pushed onto the card stack. You can navigate back to the previous card using the back button.'
+                            }
+                        }
+                    ]
+                },
+                {   // Card operations section
+                    header: 'Card Operations',
+                    collapsible: true,
+                    numUncollapsibleWidgets: 0,
+                    widgets: [
+                        {   // TextParagraph widget
+                            id: 'card_operations_text_paragraph',
+                            TextParagraph: {
+                                text: 'Use the buttons below to demonstrate card operations like popping to root or opening a new card.'
+                            }
+                        },
+                        {   // TextButton to pop to root card
+                            id: 'pop_to_root_card_button',
+                            TextButton: {
+                                text: '⬆️ Pop to Root Card',
+                                onClick: {
+                                    functionName: 'CardHandler.Controller.onPopToRootCardClick',
+                                    parameters: { card: 'EMD.Cards.Home' }
+                                }
+                            }
+                        },
+                        {   // TextButton to open a new card
+                            id: 'open_new_card_button',
+                            TextButton: {
+                                text: '🆕 Open New Card',
+                                onClick: {
+                                    functionName: 'CardHandler.Controller.onOpenNewCardClick',
+                                    parameters: { card: 'EMD.Cards.Sample' }
+                                }
+                            }
+                        },
+                        {   // TextButton to update current card
+                            id: 'update_current_card_button',
+                            TextButton: {
+                                text: '♻️ Update Current Card',
+                                onClick: {
+                                    functionName: 'CardHandler.Controller.onUpdateCurrentCardClick',
+                                    parameters: { card: 'EMD.Cards.Sample' }
+                                }
+                            }
+                        },
+                        {   // TextButton to pop to named card
+                            id: 'pop_to_named_card_button',
+                            TextButton: {
+                                text: '🔙 Pop to Named Card (Home)',
+                                onClick: {
+                                    functionName: 'CardHandler.Controller.onPopToNamedCardClick',
+                                    parameters: { card: 'EMD.Cards.Home' }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {   // Data view
                     header: 'Data View',
                     collapsible: true,
                     numUncollapsibleWidgets: 0,
@@ -273,7 +463,8 @@ EMD.Cards = {
     Home: EMD.Home.card,
     Account: EMD.Account.card,
     Help: EMD.Help.card,
-    About: EMD.About.card
+    About: EMD.About.card,
+    Sample: EMD.Sample.card
 }
 
 EMD.Spreadsheet = {

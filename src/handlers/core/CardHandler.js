@@ -20,7 +20,15 @@ class CardHandler {
         return this._scriptProperties;
     }
 
+    get cardService() {
+        if (!this._cardService) {
+            this._cardService = CardService;
+        }
+        return this._cardService;
+    }
+
     constructor() {
+        this._cardService = null;
         this._documentProperties = null;
         this._userProperties = null;
         this._scriptProperties = null;
@@ -31,49 +39,50 @@ CardHandler.Controller = {
     onPushCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onUpdateCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopToNamedCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onPopToRootCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onOpenCardClick: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleOpenCard(e);
     },
     onToggleBooleanSetting: (e) => {
         return new CardHandler
             .Wrapper(
-                CardHandler.prototype.documentProperties)
+                CardHandler.prototype.cardService, CardHandler.prototype.documentProperties, CardHandler.prototype.userProperties, CardHandler.prototype.scriptProperties)
             .handleToggleBooleanSetting(e);
     }
 }
 
 CardHandler.Wrapper = class {
-    constructor(documentProperties, userProperties, scriptProperties) {
+    constructor(cardService, documentProperties, userProperties, scriptProperties) {
+        this._cardService = cardService;
         this._documentProperties = documentProperties;
         this._userProperties = userProperties;
         this._scriptProperties = scriptProperties;
@@ -108,13 +117,12 @@ CardHandler.Wrapper = class {
                 this._scriptProperties);
 
             return CardController
-                .create(
-                    CardService,
-                    this._documentProperties)
-                .pushCard(emd_card({
-                    appModel: appModel.state,
-                    packageInfo: packageInfo
-                }))
+                .create(CardService, this._documentProperties)
+                .pushCard(
+                    emd_card({
+                        appModel: appModel.state,
+                        packageInfo: packageInfo
+                    }))
                 .build();
         } catch (error) {
             return this.handleError(error)
